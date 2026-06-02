@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+
+void swapNumbers(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    int num1 = 10, num2 = 20;
+    swapNumbers(&num1, &num2);
+    return 0;
+}
