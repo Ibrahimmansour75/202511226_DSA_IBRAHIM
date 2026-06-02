@@ -1,0 +1,81 @@
+#include <iostream>
+#include <string>
+#include "student.h"
+
+using namespace std;
+
+void addStudent(Student students[], int &count, int maxSize) {
+    if (count >= maxSize) {
+        cout << "Error: System storage is full!\n";
+        return;
+    }
+    cout << "Enter Student ID: ";
+    cin >> students[count].id;
+    cin.ignore();
+    cout << "Enter Name: ";
+    getline(cin, students[count].name);
+    cout << "Enter Age: ";
+    cin >> students[count].age;
+    cin.ignore();
+    cout << "Enter Course: ";
+    getline(cin, students[count].course);
+    count++;
+}
+
+void displayStudents(const Student students[], int count) {
+    if (count == 0) {
+        return;
+    }
+    for (int i = 0; i < count; i++) {
+        cout << "ID: " << students[i].id << "\n";
+        cout << "Name: " << students[i].name << "\n";
+        cout << "Age: " << students[i].age << "\n";
+        cout << "Course: " << students[i].course << "\n";
+    }
+}
+
+void searchStudent(const Student students[], int count) {
+    int searchId;
+    cout << "Enter ID: ";
+    cin >> searchId;
+    for (int i = 0; i < count; i++) {
+        if (students[i].id == searchId) {
+            cout << "Name: " << students[i].name << "\n";
+            return;
+        }
+    }
+}
+
+void updateStudent(Student students[], int count) {
+    int searchId;
+    cout << "Enter ID: ";
+    cin >> searchId;
+    for (int i = 0; i < count; i++) {
+        if (students[i].id == searchId) {
+            cin.ignore();
+            cout << "Enter New Name: ";
+            getline(cin, students[i].name);
+            cout << "Enter New Age: ";
+            cin >> students[i].age;
+            cin.ignore();
+            cout << "Enter New Course: ";
+            getline(cin, students[i].course);
+            return;
+        }
+    }
+}
+
+void deleteStudent(Student students[], int &count) {
+    int searchId;
+    cout << "Enter ID: ";
+    cin >> searchId;
+    for (int i = 0; i < count; i++) {
+        if (students[i].id == searchId) {
+            for (int j = i; j < count - 1; j++) {
+                students[j] = students[j + 1];
+            }
+            count--;
+            return;
+        }
+    }
+}
