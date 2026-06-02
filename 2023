@@ -1,0 +1,25 @@
+#include <iostream>
+#include "student.h"
+
+using namespace std;
+
+int main() {
+    const int MAX_STUDENTS = 100;
+    Student database[MAX_STUDENTS];
+    int currentCount = 0;
+    int choice;
+    
+    do {
+        cout << "1. Add\n2. Display\n3. Search\n4. Update\n5. Delete\n6. Exit\n";
+        cin >> choice;
+        switch(choice) {
+            case 1: addStudent(database, currentCount, MAX_STUDENTS); break;
+            case 2: displayStudents(database, currentCount); break;
+            case 3: searchStudent(database, currentCount); break;
+            case 4: updateStudent(database, currentCount); break;
+            case 5: deleteStudent(database, currentCount); break;
+        }
+    } while (choice != 6);
+    
+    return 0;
+}
