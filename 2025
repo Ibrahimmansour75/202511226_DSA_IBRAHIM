@@ -1,0 +1,86 @@
+#include "LibraryBook.h"
+
+LibraryBook::LibraryBook()
+{
+    bookID = 0;
+    title = "";
+    author = "";
+    borrowerName = "";
+    daysBorrowed = 0;
+    borrowed = false;
+}
+
+LibraryBook::LibraryBook(int id, string t, string a)
+{
+    bookID = id;
+    title = t;
+    author = a;
+    borrowerName = "";
+    daysBorrowed = 0;
+    borrowed = false;
+}
+
+LibraryBook::~LibraryBook()
+{
+    cout << "Book Object Destroyed" << endl;
+}
+
+void LibraryBook::setBookID(int id)
+{
+    bookID = id;
+}
+
+void LibraryBook::setTitle(string t)
+{
+    title = t;
+}
+
+void LibraryBook::setAuthor(string a)
+{
+    author = a;
+}
+
+void LibraryBook::setBorrowerName(string n)
+{
+    borrowerName = n;
+}
+
+void LibraryBook::setDaysBorrowed(int d)
+{
+    daysBorrowed = d;
+}
+
+void LibraryBook::setBorrowed(bool b)
+{
+    borrowed = b;
+}
+
+int LibraryBook::getBookID() const
+{
+    return bookID;
+}
+
+string LibraryBook::getTitle() const
+{
+    return title;
+}
+
+string LibraryBook::getAuthor() const
+{
+    return author;
+}
+
+string LibraryBook::getBorrowerName() const
+{
+    return borrowerName;
+}
+
+int LibraryBook::getDaysBorrowed() const
+{
+    return daysBorrowed;
+}
+
+bool LibraryBook::getBorrowed() const
+{
+    return borrowed;
+}
