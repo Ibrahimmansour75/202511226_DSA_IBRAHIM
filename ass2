@@ -1,0 +1,38 @@
+#ifndef LIBRARYBOOK_H
+#define LIBRARYBOOK_H
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class LibraryBook
+{
+private:
+    int bookID;
+    string title;
+    string author;
+    string borrowerName;
+    int daysBorrowed;
+    bool borrowed;
+
+public:
+    LibraryBook();
+    LibraryBook(int, string, string);
+    ~LibraryBook();
+
+    void setBookID(int);
+    void setTitle(string);
+    void setAuthor(string);
+    void setBorrowerName(string);
+    void setDaysBorrowed(int);
+    void setBorrowed(bool);
+
+    int getBookID() const;
+    string getTitle() const;
+    string getAuthor() const;
+    string getBorrowerName() const;
+    int getDaysBorrowed() const;
+    bool getBorrowed() const;
+};
+
+#endif
