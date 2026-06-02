@@ -1,0 +1,75 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "notepad.h"
+
+using namespace std;
+
+
+void writeFile(string filename) {
+    ofstream outFile(filename);
+
+    if (!outFile) {
+        cout << "Error: Could not create the file!" << endl;
+        return;
+    }
+
+    cout << "Enter text (Type 'END' on a new line to stop and save):\n";
+    string line;
+    
+   
+    while (getline(cin, line)) {
+        if (line == "END") {
+            break;
+        }
+        outFile << line << endl;
+    }
+
+    outFile.close(); 
+    cout << "File saved successfully.\n";
+}
+
+
+void readFile(string filename) {
+    ifstream inFile(filename); 
+
+    
+    if (!inFile) {
+        cout << "Error: File not found! Please check the name.\n";
+        return;
+    }
+
+    cout << "\n--- File Content ---\n";
+    string line;
+    
+    while (getline(inFile, line)) {
+        cout << line << endl;
+    }
+    cout << "--------------------\n";
+
+    inFile.close();
+}
+
+
+void appendFile(string filename) {
+    ofstream outFile(filename, ios::app); 
+
+    if (!outFile) {
+        cout << "Error: Could not open the file for appending!\n";
+        return;
+    }
+
+    cout << "Enter text to add (Type 'END' on a new line to stop):\n";
+    string line;
+
+  
+    while (getline(cin, line)) {
+        if (line == "END") {
+            break;
+        }
+        outFile << line << endl;
+    }
+
+    outFile.close();
+    cout << "Text appended successfully.\n";
+}
