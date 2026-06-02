@@ -1,0 +1,229 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+using namespace std;
+
+class Student {
+public:
+    string rollNumber;
+    string name;
+    int age;
+
+    Student() {}
+
+    Student(string r, string n, int a) {
+        rollNumber = r;
+        name = n;
+        age = a;
+    }
+};
+
+void displayStudents() {
+    ifstream file("student.txt");
+
+    string line;
+
+    cout << "\n===== STUDENT RECORDS =====\n";
+
+    while (getline(file, line)) {
+        stringstream ss(line);
+
+        string roll, name, age;
+
+        getline(ss, roll, ',');
+        getline(ss, name, ',');
+        getline(ss, age, ',');
+
+        cout << "Roll Number: " << roll << endl;
+        cout << "Name: " << name << endl;
+        cout << "Age: " << age << endl;
+        cout << "------------------------\n";
+    }
+
+    file.close();
+}
+
+void searchStudent() {
+    string targetRoll;
+    cout << "Enter Roll Number: ";
+    cin >> targetRoll;
+
+    ifstream file("student.txt");
+    string line;
+    bool found = false;
+
+    while (getline(file, line)) {
+        stringstream ss(line);
+
+        string roll, name, age;
+
+        getline(ss, roll, ',');
+        getline(ss, name, ',');
+        getline(ss, age, ',');
+
+        if (roll == targetRoll) {
+            cout << "\nStudent Found\n";
+            cout << "Roll Number: " << roll << endl;
+            cout << "Name: " << name << endl;
+            cout << "Age: " << age << endl;
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+        cout << "Student not found\n";
+
+    file.close();
+}
+
+void updateStudent() {
+    string targetRoll;
+
+    cout << "Enter Roll Number to Update: ";
+    cin >> targetRoll;
+
+    ifstream file("student.txt");
+
+    vector<Student> students;
+
+    string line;
+    bool found = false;
+
+    while (getline(file, line)) {
+        stringstream ss(line);
+
+        string roll, name, ageStr;
+
+        getline(ss, roll, ',');
+        getline(ss, name, ',');
+        getline(ss, ageStr, ',');
+
+        int age = stoi(ageStr);
+
+        if (roll == targetRoll) {
+            cout << "Enter New Name: ";
+            cin >> name;
+
+            cout << "Enter New Age: ";
+            cin >> age;
+
+            found = true;
+        }
+
+        students.push_back(Student(roll, name, age));
+    }
+
+    file.close();
+
+    ofstream outFile("student.txt");
+
+    for (auto s : students) {
+        outFile << s.rollNumber << ","
+                << s.name << ","
+                << s.age << endl;
+    }
+
+    outFile.close();
+
+    if (found)
+        cout << "Student Updated Successfully\n";
+    else
+        cout << "Student not found\n";
+}
+
+void deleteStudent() {
+    string targetRoll;
+
+    cout << "Enter Roll Number to Delete: ";
+    cin >> targetRoll;
+
+    ifstream file("student.txt");
+
+    vector<Student> students;
+
+    string line;
+    bool found = false;
+
+    while (getline(file, line)) {
+        stringstream ss(line);
+
+        string roll, name, ageStr;
+
+        getline(ss, roll, ',');
+        getline(ss, name, ',');
+        getline(ss, ageStr, ',');
+
+        int age = stoi(ageStr);
+
+        if (roll == targetRoll) {
+            found = true;
+            continue;
+        }
+
+        students.push_back(Student(roll, name, age));
+    }
+
+    file.close();
+
+    ofstream outFile("student.txt");
+
+    for (auto s : students) {
+        outFile << s.rollNumber << ","
+                << s.name << ","
+                << s.age << endl;
+    }
+
+    outFile.close();
+
+    if (found)
+        cout << "Student Deleted Successfully\n";
+    else
+        cout << "Student not found\n";
+}
+
+int main() {
+
+    int choice;
+
+    do {
+        cout << "\n===== MENU =====\n";
+        cout << "1. Display All Students\n";
+        cout << "2. Search Student\n";
+        cout << "3. Update Student\n";
+        cout << "4. Delete Student\n";
+        cout << "5. Exit\n";
+        cout << "Enter Choice: ";
+        cin >> choice;
+
+        switch (choice) {
+
+        case 1:
+            displayStudents();
+            break;
+
+        case 2:
+            searchStudent();
+            break;
+
+        case 3:
+            updateStudent();
+            break;
+
+        case 4:
+            deleteStudent();
+            break;
+
+        case 5:
+            cout << "Good Bye\n";
+            break;
+
+        default:
+            cout << "Invalid Choice\n";
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
