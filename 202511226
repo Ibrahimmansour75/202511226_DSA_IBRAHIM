@@ -1,0 +1,202 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+using namespace std;
+
+struct Student {
+    string rollNumber;
+    string name;
+    int age;
+};
+
+void displayAllStudents() {
+    ifstream file("student.txt");
+    if (!file.is_open()) {
+        cout << "Error opening file or file does not exist.\n";
+        return;
+    }
+
+    string line;
+    cout << "\n--- Student Records ---\n";
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string roll, name, ageStr;
+
+        if (getline(ss, roll, ',') && getline(ss, name, ',') && getline(ss, ageStr, ',')) {
+            cout << "Roll Number: " << roll << ", Name: " << name << ", Age: " << ageStr << endl;
+        }
+    }
+    file.close();
+}
+
+void searchStudent() {
+    ifstream file("student.txt");
+    if (!file.is_open()) {
+        cout << "Error opening file or file does not exist.\n";
+        return;
+    }
+
+    string searchRoll;
+    cout << "Enter Roll Number to search: ";
+    cin >> searchRoll;
+
+    string line;
+    bool found = false;
+
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string roll, name, ageStr;
+
+        if (getline(ss, roll, ',') && getline(ss, name, ',') && getline(ss, ageStr, ',')) {
+            if (roll == searchRoll) {
+                cout << "\nStudent Found:\n";
+                cout << "Roll Number: " << roll << "\nName: " << name << "\nAge: " << ageStr << endl;
+                found = true;
+                break;
+            }
+        }
+    }
+
+    if (!found) {
+        cout << "Student not found\n";
+    }
+    file.close();
+}
+
+void updateStudent() {
+    ifstream file("student.txt");
+    if (!file.is_open()) {
+        cout << "Error opening file or file does not exist.\n";
+        return;
+    }
+
+    string targetRoll;
+    cout << "Enter Roll Number to update: ";
+    cin >> targetRoll;
+
+    Student students[100];
+    int count = 0;
+    string line;
+    bool found = false;
+
+    while (getline(file, line) && count < 100) {
+        stringstream ss(line);
+        string roll, name, ageStr;
+
+        if (getline(ss, roll, ',') && getline(ss, name, ',') && getline(ss, ageStr, ',')) {
+            if (roll == targetRoll) {
+                found = true;
+                students[count].rollNumber = roll;
+                cout << "Enter new Name: ";
+                cin.ignore();
+                getline(cin, students[count].name);
+                cout << "Enter new Age: ";
+                cin >> students[count].age;
+            } else {
+                students[count].rollNumber = roll;
+                students[count].name = name;
+                students[count].age = stoi(ageStr);
+            }
+            count++;
+        }
+    }
+    file.close();
+
+    if (!found) {
+        cout << "Student not found\n";
+        return;
+    }
+
+    ofstream outFile("student.txt");
+    for (int i = 0; i < count; i++) {
+        outFile << students[i].rollNumber << "," << students[i].name << "," << students[i].age << "\n";
+    }
+    outFile.close();
+    cout << "Student record updated successfully.\n";
+}
+
+void deleteStudent() {
+    ifstream file("student.txt");
+    if (!file.is_open()) {
+        cout << "Error opening file or file does not exist.\n";
+        return;
+    }
+
+    string targetRoll;
+    cout << "Enter Roll Number to delete: ";
+    cin >> targetRoll;
+
+    Student students[100];
+    int count = 0;
+    string line;
+    bool found = false;
+
+    while (getline(file, line) && count < 100) {
+        stringstream ss(line);
+        string roll, name, ageStr;
+
+        if (getline(ss, roll, ',') && getline(ss, name, ',') && getline(ss, ageStr, ',')) {
+            if (roll == targetRoll) {
+                found = true;
+                continue; 
+            } else {
+                students[count].rollNumber = roll;
+                students[count].name = name;
+                students[count].age = stoi(ageStr);
+                count++;
+            }
+        }
+    }
+    file.close();
+
+    if (!found) {
+        cout << "Student not found\n";
+        return;
+    }
+
+    ofstream outFile("student.txt");
+    for (int i = 0; i < count; i++) {
+        outFile << students[i].rollNumber << "," << students[i].name << "," << students[i].age << "\n";
+    }
+    outFile.close();
+    cout << "Student record deleted successfully.\n";
+}
+
+int main() {
+    int choice;
+
+    do {
+        cout << "\n--- Menu ---\n";
+        cout << "1. Display All Students\n";
+        cout << "2. Search Student\n";
+        cout << "3. Update Student\n";
+        cout << "4. Delete Student\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                displayAllStudents();
+                break;
+            case 2:
+                searchStudent();
+                break;
+            case 3:
+                updateStudent();
+                break;
+            case 4:
+                deleteStudent();
+                break;
+            case 5:
+                cout << "Exiting program.\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 5);
+
+    return 0;
+}
