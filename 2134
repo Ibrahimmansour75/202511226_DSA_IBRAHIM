@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int chosenNumber = 7;
+    int userInput = 0;
+    int attempts[100];
+    int count = 0;
+    
+    while (userInput != chosenNumber) {
+        cout << "Enter guess: ";
+        cin >> userInput;
+        attempts[count] = userInput;
+        count++;
+        
+        if (userInput > chosenNumber) {
+            cout << "Too high\n";
+        } else if (userInput < chosenNumber) {
+            cout << "Too low\n";
+        } else {
+            cout << "Correct\n";
+        }
+    }
+    
+    cout << "Your attempts:\n";
+    for (int i = 0; i < count; i++) {
+        cout << attempts[i] << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}
