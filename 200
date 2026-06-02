@@ -1,0 +1,38 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+void checkResult(string name, double s1, double s2, double s3) {
+    double total = s1 + s2 + s3;
+    double average = total / 3.0;
+    
+    cout << "Name: " << name << "\nTotal: " << total << "\nAverage: " << average << "\n";
+    if (average >= 50.0) {
+        cout << "Status: PASSED\n";
+    } else {
+        cout << "Status: FAILED\n";
+    }
+}
+
+int main() {
+    char continueChoice;
+    do {
+        string name;
+        double sub1, sub2, sub3;
+        
+        cout << "Enter name: ";
+        cin.ignore();
+        getline(cin, name);
+        
+        cout << "Enter 3 marks: ";
+        cin >> sub1 >> sub2 >> sub3;
+        
+        checkResult(name, sub1, sub2, sub3);
+        
+        cout << "Continue? (y/n): ";
+        cin >> continueChoice;
+    } while (continueChoice == 'y' || continueChoice == 'Y');
+    
+    return 0;
+}
