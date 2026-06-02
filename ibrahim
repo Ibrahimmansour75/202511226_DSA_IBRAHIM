@@ -1,0 +1,17 @@
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
+#include "LibraryBook.h"
+
+extern LibraryBook books[100];
+extern int totalBooks;
+
+void addBook();
+void displayBooks();
+void borrowBookMenu();
+void returnBookMenu();
+void searchBook();
+void displayOverdueBooks();
+void calculateTotalFines();
+
+#endif
